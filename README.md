@@ -1,0 +1,2 @@
+# srtfCG
+algoritmo srtfcg
