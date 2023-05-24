@@ -1,5 +1,7 @@
 package Modelo;
 
+import java.util.Queue;
+
 public class Cola<T> {
 
 	private Nodo<T> cabeza;
@@ -32,9 +34,10 @@ public class Cola<T> {
 		cabeza = auxiliar.getSiguiente();
 		dato = auxiliar.getDato();
 		auxiliar = null;
-		tamanio--;
+		tamanio--;//esta es la diferencia,se reduce el tamaño de la cola
 		return dato;
 	}
+	
 
 	public boolean eliminar(int posicion) {
 		if (tamanio >= posicion) {
@@ -78,6 +81,8 @@ public class Cola<T> {
 	public int getTamanio() {
 		return tamanio;
 	}
+	
+	
 
 	@Override
 	protected void finalize() throws Throwable {

@@ -22,6 +22,7 @@ public class Main {
 		}
 		Controlador controller = new Controlador(new Modelo(), new Ventana("Algoritmo SRTF"));
 		controller.inicializarControlador(COLUMN_NAME);
+		
 	}
 
 }

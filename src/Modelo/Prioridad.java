@@ -32,6 +32,7 @@ public class Prioridad {//acá esta la lógica fuerte | Ya se han realizado todo
         retoreFromMemento(guardarEstados.getDatos(guardarEstados.getTamanio() - 1));
         calcularTiempos(proceso);
     }
+    
 
     public Object[] getDatoProceso(Proceso proceso) {
         calcularTiempos(proceso);

@@ -25,7 +25,11 @@ public class Proceso implements Cloneable{//ya hice los respectivos cambios
         tiempoRafagaEjecutada = 0;
     }
 
-    public String getId() {
+    public Proceso(Object[] resume) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getId() {
         return id;
     }
 

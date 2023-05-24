@@ -1,10 +1,12 @@
 package Controlador;
 
 import javax.swing.JOptionPane;
+
 import javax.swing.table.DefaultTableModel;
 
 import Modelo.Modelo;
 import Modelo.Proceso;
+
 import Vista.Ventana;
 import javax.swing.ImageIcon;
 
@@ -53,24 +55,6 @@ public class Controlador {
         }
     }
 
-    private void atenderPrioridadAction() {
-        try {
-            if (!modelo.getColaListos().estaVaciaCola()) {
-                Object[] dato = modelo.getColaListos().getDatoProceso(modelo.getColaListos().atenderProcesoPorPrioridad());
-                vista.getPnlTablaColaListos().removeRow(0, String.valueOf(dato[0]));
-                vista.getPnlTabla().getTablaModelo().addRow(dato);
-                vista.getPnlTablaGantt().pintarProceso(dato);
-            } else {
-                JOptionPane.showMessageDialog(null, "¡No hay ningún procesos por atender!", "Atender",
-                        JOptionPane.WARNING_MESSAGE);
-            }
-
-        } catch (Exception e) {
-            System.out.println("algo");
-        }
-
-    }
-
     private void atenderAction() {
 
         if (!modelo.getColaListos().estaVaciaCola()) {
@@ -85,6 +69,7 @@ public class Controlador {
                     vista.getPnlTablaColaListos().getTablaModelo().addRow(proceso.resume());
                     return;
                 }
+                 
             }
             while (true) {
                 if (isAvalible) {
@@ -99,11 +84,35 @@ public class Controlador {
         }
 
     }
+    
 
     private void aniadirAction() {
+    	
         //vista.getPnlTablaColaListos().getTablaModelo().addRow(modelo.getColaListos().aniadirProceso());
-        vista.getPnlTablaColaListos().getTablaModelo().addRow(modelo.getColaListos().aniadirProceso().resume());
+    	//vista.getPnlTablaColaListos().getTablaModelo().addRow(modelo.getColaListos().aniadirProceso().resume());
+    	
+    	try {
+    		//Object[] child = modelo.getColaListos().aniadirProceso().resume();
+        	//vista.getPnlTablaColaListos().getTablaModelo().addRow(child);
+    		vista.getPnlTablaColaListos().getTablaModelo().addRow(modelo.getColaListos().aniadirProceso().resume());
+        	criticalSection.interrupt();
+			criticalSection.sleep(80);
+			if (!modelo.getColaBloqueados().estaVaciaCola()) {
+	            Proceso proceso = modelo.getColaBloqueados().atenderProceso();
+	            modelo.getColaListos().aniadirUltimoProceso(proceso);
+	            //vista.getPnlTableColaBloqueados().getTablaModelo().removeRow(0);
+	            vista.getPnlTableColaBloqueados().removeRow(0,proceso.getId());
+	            vista.getPnlTablaColaListos().getTablaModelo().addRow(proceso.resume());
+	        }
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+      				
+				
     }
+       
 
     private void bloquearAction() {
         if (vista.getPnlAction().getBtnBloqueo().isEnabled()) {
@@ -180,7 +189,7 @@ public class Controlador {
                     tablaModeloGantt.setValueAt(" ", fila, i + 1);
                     tablaModeloGantt.fireTableDataChanged();
                     try {
-                        Thread.sleep(600);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         vista.getPnlAction().getBtnBloqueo().setEnabled(false);
                         //vista.getPnlAction().getBtnBloqueo().setText("rojo");

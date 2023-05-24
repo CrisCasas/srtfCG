@@ -1,5 +1,8 @@
 package Vista;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,7 +16,8 @@ public class ActionPanel extends JPanel {//Esta también esta igual.
 	private JButton btnDesbloqueo;
 	private JButton btnReiniciar;
 	private JButton btnSalir;
-
+	private boolean isButtonPressed;
+	
 	public ActionPanel(JFrame window) {
 
 		btnComenzar = new JButton("Comenzar");
@@ -23,6 +27,7 @@ public class ActionPanel extends JPanel {//Esta también esta igual.
 		add(btnAtender);
 
 		btnAniadir = new JButton("Añadir");
+		btnAniadir.addActionListener(new ButtonClickListener());
 		add(btnAniadir);
 
 		btnBloqueo = new JButton("Bloqueo");
@@ -39,6 +44,20 @@ public class ActionPanel extends JPanel {//Esta también esta igual.
 
 		setVisible(true);
 	}
+	
+    public boolean isButtonPressed() {
+		return isButtonPressed;
+	}
+
+	public void setButtonPressed(boolean isButtonPressed) {
+		this.isButtonPressed = isButtonPressed;
+	}
+
+	private class ButtonClickListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            isButtonPressed = true;
+        }
+    }
 
 	public JButton getBtnComenzar() {
 		return btnComenzar;
