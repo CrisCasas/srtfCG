@@ -1,5 +1,6 @@
 package Vista;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -32,6 +33,7 @@ public class ActionPanel extends JPanel {//Esta también esta igual.
 
 		btnBloqueo = new JButton("Bloqueo");
 		add(btnBloqueo);
+		btnBloqueo.setBackground(Color.green);
 
 		btnDesbloqueo = new JButton("Desbloqueo");
 		add(btnDesbloqueo);

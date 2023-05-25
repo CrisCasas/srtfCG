@@ -8,6 +8,9 @@ import Modelo.Modelo;
 import Modelo.Proceso;
 
 import Vista.Ventana;
+
+import java.awt.Color;
+
 import javax.swing.ImageIcon;
 
 public class Controlador {
@@ -183,6 +186,7 @@ public class Controlador {
                 }
                 vista.getPnlAction().getBtnAtender().setEnabled(true);
                 vista.getPnlAction().getBtnBloqueo().setEnabled(true);
+                vista.getPnlAction().getBtnBloqueo().setBackground(Color.red);
                 for (int i = proceso.getTiempoComienzo(); i < proceso.getTiempoFinal(); i++) {
                     proceso.setTiempoRafagaEjecutada(proceso.getTiempoRafagaEjecutada() + 1);
                     remainingTime = proceso.getTiempoRafaga() - proceso.getTiempoRafagaEjecutada();
@@ -192,7 +196,7 @@ public class Controlador {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         vista.getPnlAction().getBtnBloqueo().setEnabled(false);
-                        //vista.getPnlAction().getBtnBloqueo().setText("rojo");
+                        
                         try {
                             Proceso aux = (Proceso) proceso.clone();
                             proceso.setTiempoRafaga(proceso.getTiempoRafagaEjecutada());
@@ -215,7 +219,7 @@ public class Controlador {
                 remainingTime = 0;
                 modelo.getColaListos().recalcuteTime(proceso);
                 vista.getPnlAction().getBtnBloqueo().setEnabled(false);
-                //vista.getPnlAction().getBtnBloqueo().setText("VERDE");
+                vista.getPnlAction().getBtnBloqueo().setBackground(Color.green);
                 vista.getPnlTabla().getTablaModelo().addRow(proceso.resume());
             }
         });
